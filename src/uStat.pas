@@ -5,7 +5,7 @@ uses Dialogs;
 const
 	ITMAX = 300;
 	EPS = 3.0e-7;
-	kMaxFact = 1700;  {<= 1754}
+	kMaxFact = 170;//Lazarus on Windows overflows 1700;  {<= 1754}
 var
 	gFactRAready : boolean = false;
 
@@ -172,9 +172,9 @@ begin
          gFactRA[lx] := lx * gFactRA[lx-1];
 	gFactRAready := true;
 end;
- procedure gser(var gamser, a,x, gln: real);
+ procedure gser(var gamser, a,x, gln: double);
 var n: integer;
-	sum, del, ap: real;
+	sum, del, ap: double;
 begin
 	gln := gammln(a);
 	if x <= 0.0 then begin
@@ -197,9 +197,9 @@ begin
 	end;
 end;
 
- procedure gcf(var gammcf: real; a,x, gln: real);
+ procedure gcf(var gammcf: double; a,x, gln: double);
 var n: integer;
-	gold,fac,b1,b0,a0,g,ana,anf,an,a1: real;
+	gold,fac,b1,b0,a0,g,ana,anf,an,a1: double;
 begin
 	fac := 1.0;
 	b1 := 1.0;
@@ -229,8 +229,8 @@ begin
 	Alertmsg('GCF error: ITMAX too small for requested a-value');
 end;
 
-function gammq( a,x: real): real;
-	var gamser, gammcf, gln: real;
+function gammq( a,x: double): double;
+	var gamser, gammcf, gln: double;
 begin
         gammq := 0;
 	if (x < 0) or (a <= 0.0) then alertmsg('Invalid arguments in routine GAMMQ')
@@ -245,7 +245,7 @@ begin
 	end;
 end;
 procedure Chi(pN, pNHits: integer; var pChi, p: double); {pn > 1}
-var lExpected: real;
+var lExpected: double;
 begin
          pChi := 0;
          p := 0;
@@ -477,8 +477,8 @@ begin
 		 inc(lB);
 		 inc(lC);
 	 end;
-	 //TabbedNotebookDlg.caption := realtostr(result,6) ;
-	 // TabbedNotebookDlg.caption := realtostr(result,6) ;
+	 //TabbedNotebookDlg.caption := doubletostr(result,6) ;
+	 // TabbedNotebookDlg.caption := doubletostr(result,6) ;
 	 if result <= 0.5 then
 		exit;
 
@@ -590,7 +590,7 @@ begin
 		 dec(lB);
 		 dec(lC);
 	 end;
-	  //TabbedNotebookDlg.caption := inttostr(lSmal)+'x'+inttostr(lCross1)+'x'+inttostr(lCross2)+'x'+inttostr(lSmalDiag)+'='+realtostr(lProb1,6) +'  '+realtostr(lProb2,6);
+	  //TabbedNotebookDlg.caption := inttostr(lSmal)+'x'+inttostr(lCross1)+'x'+inttostr(lCross2)+'x'+inttostr(lSmalDiag)+'='+doubletostr(lProb1,6) +'  '+doubletostr(lProb2,6);
 end;
 
 function FisherMidP (A,B,C,D: integer): double;
